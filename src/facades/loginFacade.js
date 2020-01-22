@@ -24,8 +24,12 @@ const loginFacade = (function() {
 	}
 
 	function tokenDecoder() {
-		let decodedToken = jwt_decode(localStorage.getItem("jwtToken"));
-		console.log(decodedToken);
+		let decodedToken = undefined;
+		try {
+			decodedToken = jwt_decode(localStorage.getItem("jwtToken"));
+		} catch {
+			console.log("No token to decode");
+		}
 		return decodedToken;
 	}
 

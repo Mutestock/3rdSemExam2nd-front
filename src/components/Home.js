@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import utils from "../utils";
+import settings from "../settings";
+import kayakFacade from "../facades/kayakFacade";
 
 const HomePage = ({
 	currentUser,
@@ -7,7 +9,8 @@ const HomePage = ({
 	tableData,
 	setTableData,
 	tableJSX,
-	setTableJSX
+	setTableJSX,
+	kayakFacade
 	//
 }) => {
 	console.log(currentUser.username);
@@ -18,6 +21,8 @@ const HomePage = ({
 		console.log(tableData);
 		console.log(utils.getMock() === undefined);
 		console.log(tableData === undefined);
+		console.log(settings.URL);
+		kayakFacade.readAll().then(o => console.log(o));
 
 		if (tableData !== undefined) {
 			console.log(utils.dynamicJSONManipulation(tableData));

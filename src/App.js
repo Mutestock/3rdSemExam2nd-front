@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	HashRouter as Router,
 	Switch,
@@ -11,31 +11,69 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import UserPage from "./components/UserPage";
 import DataManipulation from "./components/DataManipulation";
+import UserBookingHistory from "./components/UserBookingHistory";
+import UserKayakBooking from "./components/UserKayakBooking";
+import AdminCRUDBooking from "./components/AdminCRUDBooking";
+import AdminCRUDKayak from "./components/AdminCRUDKayak";
 
 const NoMatch = () => {
 	return <h3>The page was not found.</h3>;
 };
 
-function App({ loginFacade, userFacade, utils, commentFacade }) {
+function App({
+	loginFacade,
+	userFacade,
+	utils,
+	commentFacade,
+	kayakFacade,
+	bookingFacade
+}) {
 	const userDefinition = { userName: "", userPass: "" };
 
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [currentUser, setCurrentUser] = useState({ ...userDefinition });
 	const [tableData, setTableData] = useState();
 	const [tableJSX, setTableJSX] = useState();
+	const [bookingContents, setBookingContents] = useState({});
+	const [kayakTableContents, setKayakTableContents] = useState({});
+	const [imageContents, setImageContents] = useState();
+	const [reservationContents, setReservationContents] = useState();
+
+	useEffect(() => {
+		console.log("in useffect");
+		if (Object.keys(bookingContents).length === 0) {
+			bookingFacade.readAll().then(data => {
+				setBookingContents(data);
+				console.log("Data: " + Object.values(data));
+			});
+		}
+	}, []);
+
+	useEffect(() => {
+		console.log("in effect kayak");
+		console.log(kayakTableContents === undefined);
+		if (Object.keys(kayakTableContents).length === 0) {
+			kayakFacade.readAll().then(data => {
+				setKayakTableContents(data);
+				console.log("data:");
+				console.log(data);
+			});
+		}
+	}, []);
 
 	return (
 		<Router>
-			<Header currentUser={currentUser} />
+			<Header currentUser={currentUser} loginFacade={loginFacade} />
 			<Switch>
 				<Route exact path="/">
 					<Home
 						currentUser={currentUser}
-						//Testing. Delete when table is finishe
+						//Testing. Delete when table is finished
 						tableData={tableData}
 						setTableData={setTableData}
 						tableJSX={tableJSX}
 						setTableJSX={setTableJSX}
+						kayakFacade={kayakFacade}
 						//
 					/>
 				</Route>
@@ -58,6 +96,29 @@ function App({ loginFacade, userFacade, utils, commentFacade }) {
 						userDefinition={userDefinition}
 					/>
 				</Route>
+				<Route path="/history">
+					<UserBookingHistory
+						bookingFacade={bookingFacade}
+						bookingsContents={bookingContents}
+						setBookingContents={setBookingContents}
+						kayakTableContents={kayakTableContents}
+						setKayakTableContents={setKayakTableContents}
+						kayakFacade={kayakFacade}
+					/>
+				</Route>
+				<Route path="/booking">
+					<UserKayakBooking
+						kayakTableContents={kayakTableContents}
+						setKayakTableContents={setKayakTableContents}
+						kayakFacade={kayakFacade}
+					/>
+				</Route>
+				<Route path="/admin_booking">
+					<AdminCRUDBooking />
+				</Route>
+				<Route path="/admin_kayak_booking">
+					<AdminCRUDKayak />
+				</Route>
 				<Route path="/data_manipulation">
 					{currentUser.username !== "" && currentUser.username !== undefined ? (
 						<DataManipulation commentFacade={commentFacade} />
@@ -65,7 +126,6 @@ function App({ loginFacade, userFacade, utils, commentFacade }) {
 						<Redirect to="/login"></Redirect>
 					)}
 				</Route>
-
 				<Route>
 					<NoMatch />
 				</Route>

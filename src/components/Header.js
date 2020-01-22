@@ -1,16 +1,43 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, loginFacade }) => {
+	//console.log(loginFacade.tokenDecoder().roles);
+	let tokenDecoderDoorStopper = false;
+	try {
+		tokenDecoderDoorStopper = loginFacade.tokenDecoder().roles === "admin";
+	} catch {
+		console.log("Token decoder crash caught by door stopper");
+	}
+
 	const userHeaders =
 		currentUser.username !== "" && currentUser.username !== undefined ? (
-			<div>
-				<li>
-					<NavLink activeClassName="active" to="/data_manipulation">
-						Data Manipulation
-					</NavLink>
-				</li>
-			</div>
+			tokenDecoderDoorStopper ? (
+				<div>
+					<li>
+						<NavLink activeClassName="active" to="/data_manipulation">
+							Data Manipulation
+						</NavLink>
+					</li>
+				</div>
+			) : (
+				<div>
+					<div>
+						<li>
+							<NavLink activeClassName="active" to="/history">
+								History
+							</NavLink>
+						</li>
+					</div>
+					<div>
+						<li>
+							<NavLink activeClassName="active" to="/booking">
+								Kayak Booking
+							</NavLink>
+						</li>
+					</div>
+				</div>
+			)
 		) : (
 			<div>
 				<li>
