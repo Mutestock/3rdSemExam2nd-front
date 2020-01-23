@@ -4,15 +4,8 @@ import utils from "../utils";
 const URL = configuration.URL + "/api/kayak";
 
 const kayakFacade = (function() {
-	function createKayak(color, description, model, name, personCount, year) {
-		const options = utils.fetchOptions("POST", false, {
-			color: color,
-			description: description,
-			model: model,
-			name: name,
-			personCount: personCount,
-			year: year
-		});
+	function createKayak(kayak) {
+		const options = utils.fetchOptions("POST", false, kayak);
 		return fetch(URL, options).then(() => utils.handleHttpErrors);
 	}
 	function readKayak(id) {
@@ -37,7 +30,7 @@ const kayakFacade = (function() {
 
 	function deleteKayak(id) {
 		const options = utils.fetchOptions("DELETE", false);
-		const result = fetch(URL + "/"+ id, options).then(utils.handleHttpErrors);
+		const result = fetch(URL + "/" + id, options).then(utils.handleHttpErrors);
 		return result;
 	}
 
