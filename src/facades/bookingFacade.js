@@ -39,12 +39,21 @@ const bookingFacade = (function() {
 		return result;
 	}
 
+	function popDatabase(id) {
+		const options = utils.fetchOptions("put", true);
+		const result = fetch(URL + "/pop/" + id, options).then(
+			utils.handleHttpErrors
+		);
+		return result;
+	}
+
 	return {
 		create: createBooking,
 		read: readBooking,
 		readAll: readAllBookings,
 		update: updateBooking,
-		remove: deleteBooking
+		remove: deleteBooking,
+		popDatabase: popDatabase
 	};
 })();
 

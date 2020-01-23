@@ -43,12 +43,22 @@ const userFacade = (function() {
 		return result;
 	}
 
+	function promoteUser(id) {
+		const options = utils.fetchOptions("GET", true);
+		const result = fetch(
+			configuration.URL + "/api/user/promote/" + id,
+			options
+		).then(utils.handleHttpErrors);
+		return result;
+	}
+
 	return {
 		create: createUser,
 		read: readUser,
 		readAll: readAllUsers,
 		update: updateUser,
-		remove: deleteUser
+		remove: deleteUser,
+		promoteUser: promoteUser
 	};
 })();
 

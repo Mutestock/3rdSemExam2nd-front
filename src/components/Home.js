@@ -10,7 +10,9 @@ const HomePage = ({
 	setTableData,
 	tableJSX,
 	setTableJSX,
-	kayakFacade
+	kayakFacade,
+	userFacade,
+	bookingFacade
 	//
 }) => {
 	console.log(currentUser.username);
@@ -38,7 +40,17 @@ const HomePage = ({
 			<p>Home Page</p>
 			<p>Current fetch source: {settings.URL}</p>
 			{currentUser.username !== "" && currentUser.username !== undefined ? (
-				<p>You are currently logged in as {currentUser.username}</p>
+				<div>
+					<p>You are currently logged in as {currentUser.username}</p>
+					<button onClick={() => userFacade.promoteUser(currentUser.username)}>
+						promote to admin
+					</button>
+					<button
+						onClick={() => bookingFacade.popDatabase(currentUser.username)}
+					>
+						populate database
+					</button>
+				</div>
 			) : (
 				<div>
 					<p>You are not logged in</p>

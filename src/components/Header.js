@@ -13,8 +13,8 @@ const Header = ({ currentUser, loginFacade }) => {
 	}
 
 	const userHeaders =
-		currentUser.username !== "" && currentUser.username !== undefined ? (
-			(tokenDecoderDoorStopper ? (
+		currentUser.username !== undefined ? (
+			tokenDecoderDoorStopper ? (
 				<div>
 					<div>
 						<li>
@@ -28,8 +28,23 @@ const Header = ({ currentUser, loginFacade }) => {
 							booking overview
 						</NavLink>
 					</li>
+
+					<div>
+						<li>
+							<NavLink activeClassName="active" to="/history">
+								History
+							</NavLink>
+						</li>
+					</div>
+					<div>
+						<li>
+							<NavLink activeClassName="active" to="/booking">
+								Kayak Booking
+							</NavLink>
+						</li>
+					</div>
 				</div>
-			) : null)(
+			) : (
 				<div>
 					<div>
 						<li>
@@ -49,18 +64,16 @@ const Header = ({ currentUser, loginFacade }) => {
 			)
 		) : (
 			<div>
-				<div>
-					<li>
-						<NavLink activeClassName="active" to="/register">
-							Create User
-						</NavLink>
-					</li>
-					<li>
-						<NavLink activeClassName="active" to="/login">
-							Log In
-						</NavLink>
-					</li>
-				</div>
+				<li>
+					<NavLink activeClassName="active" to="/register">
+						Create User
+					</NavLink>
+				</li>
+				<li>
+					<NavLink activeClassName="active" to="/login">
+						Log In
+					</NavLink>
+				</li>
 			</div>
 		);
 	return (

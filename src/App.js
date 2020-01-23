@@ -80,6 +80,8 @@ function App({
 						tableJSX={tableJSX}
 						setTableJSX={setTableJSX}
 						kayakFacade={kayakFacade}
+						userFacade={userFacade}
+						bookingFacade={bookingFacade}
 						//
 					/>
 				</Route>
