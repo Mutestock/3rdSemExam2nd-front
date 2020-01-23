@@ -92,7 +92,7 @@ const UserKayakBooking = ({
 			if (mode === "Create") {
 				kayakFacade.create(kayakToManage);
 			} else if (mode === "Edit") {
-				kayakFacade.edit(kayakToManage);
+				kayakFacade.update(kayakToManage);
 			}
 		}
 		event.preventDefault();

@@ -20,11 +20,8 @@ const kayakFacade = (function() {
 		);
 	}
 
-	function updateKayak(username, password) {
-		const options = utils.fetchOptions("PUT", false, {
-			userName: username,
-			userPass: password
-		});
+	function updateKayak(kayak) {
+		const options = utils.fetchOptions("PUT", false, kayak);
 		return fetch(URL, options).then(utils.handleHttpErrors);
 	}
 

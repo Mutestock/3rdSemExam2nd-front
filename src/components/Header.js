@@ -5,22 +5,31 @@ const Header = ({ currentUser, loginFacade }) => {
 	//console.log(loginFacade.tokenDecoder().roles);
 	let tokenDecoderDoorStopper = false;
 	try {
-		tokenDecoderDoorStopper = loginFacade.tokenDecoder().roles === "admin";
+		if (loginFacade.tokenDecoder().roles.includes("admin")) {
+			tokenDecoderDoorStopper = true;
+		}
 	} catch {
 		console.log("Token decoder crash caught by door stopper");
 	}
 
 	const userHeaders =
 		currentUser.username !== "" && currentUser.username !== undefined ? (
-			tokenDecoderDoorStopper ? (
+			(tokenDecoderDoorStopper ? (
 				<div>
+					<div>
+						<li>
+							<NavLink activeClassName="active" to="/data_manipulation">
+								Data Manipulation
+							</NavLink>
+						</li>
+					</div>
 					<li>
-						<NavLink activeClassName="active" to="/data_manipulation">
-							Data Manipulation
+						<NavLink activeClassName="active" to="/admin_booking_overview">
+							booking overview
 						</NavLink>
 					</li>
 				</div>
-			) : (
+			) : null)(
 				<div>
 					<div>
 						<li>
@@ -40,16 +49,18 @@ const Header = ({ currentUser, loginFacade }) => {
 			)
 		) : (
 			<div>
-				<li>
-					<NavLink activeClassName="active" to="/register">
-						Create User
-					</NavLink>
-				</li>
-				<li>
-					<NavLink activeClassName="active" to="/login">
-						Log In
-					</NavLink>
-				</li>
+				<div>
+					<li>
+						<NavLink activeClassName="active" to="/register">
+							Create User
+						</NavLink>
+					</li>
+					<li>
+						<NavLink activeClassName="active" to="/login">
+							Log In
+						</NavLink>
+					</li>
+				</div>
 			</div>
 		);
 	return (

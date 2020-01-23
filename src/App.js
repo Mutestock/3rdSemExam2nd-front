@@ -13,7 +13,7 @@ import UserPage from "./components/UserPage";
 import DataManipulation from "./components/DataManipulation";
 import UserBookingHistory from "./components/UserBookingHistory";
 import UserKayakBooking from "./components/UserKayakBooking";
-import AdminCRUDBooking from "./components/AdminCRUDBooking";
+import AdminBookingOverview from "./components/AdminBookingOverview";
 import AdminCRUDKayak from "./components/AdminCRUDKayak";
 
 const NoMatch = () => {
@@ -128,7 +128,10 @@ function App({
 					)}
 				</Route>
 				<Route path="/admin_booking">
-					<AdminCRUDBooking />
+					<AdminBookingOverview
+						bookingFacade={bookingFacade}
+						bookingContents={bookingContents}
+					/>
 				</Route>
 				<Route path="/admin_kayak_booking">
 					<AdminCRUDKayak />
