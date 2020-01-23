@@ -36,6 +36,7 @@ const HomePage = ({
 	return (
 		<div>
 			<p>Home Page</p>
+			<p>Current fetch source: {settings.URL}</p>
 			{currentUser.username !== "" && currentUser.username !== undefined ? (
 				<p>You are currently logged in as {currentUser.username}</p>
 			) : (

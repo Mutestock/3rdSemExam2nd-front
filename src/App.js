@@ -38,14 +38,20 @@ function App({
 	const [kayakTableContents, setKayakTableContents] = useState({});
 	const [imageContents, setImageContents] = useState();
 	const [reservationContents, setReservationContents] = useState();
+	const [update, triggerUpdate] = useState(false);
 
 	useEffect(() => {
 		console.log("in useffect");
+		console.log(bookingContents);
+
 		if (Object.keys(bookingContents).length === 0) {
 			bookingFacade.readAll().then(data => {
 				setBookingContents(data);
 				console.log("Data: " + Object.values(data));
 			});
+			if (Object.keys(bookingContents).length === 0) {
+				setBookingContents({ status: "botched" });
+			}
 		}
 	}, []);
 
@@ -59,7 +65,7 @@ function App({
 				console.log(data);
 			});
 		}
-	}, []);
+	}, [update]);
 
 	return (
 		<Router>
@@ -107,11 +113,19 @@ function App({
 					/>
 				</Route>
 				<Route path="/booking">
-					<UserKayakBooking
-						kayakTableContents={kayakTableContents}
-						setKayakTableContents={setKayakTableContents}
-						kayakFacade={kayakFacade}
-					/>
+					{currentUser.username !== "" && currentUser.username !== undefined ? (
+						<UserKayakBooking
+							kayakTableContents={kayakTableContents}
+							setKayakTableContents={setKayakTableContents}
+							kayakFacade={kayakFacade}
+							bookingFacade={bookingFacade}
+							currentUser={currentUser}
+							loginFacade={loginFacade}
+							triggerUpdate={triggerUpdate}
+						/>
+					) : (
+						<Redirect to="/login"></Redirect>
+					)}
 				</Route>
 				<Route path="/admin_booking">
 					<AdminCRUDBooking />

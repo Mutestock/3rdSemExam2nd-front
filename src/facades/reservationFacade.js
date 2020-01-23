@@ -13,9 +13,7 @@ const reservationFacade = (function() {
 	}
 	function readReservation(id) {
 		const options = utils.fetchOptions("GET", true);
-		const result = fetch(configuration.URL + "/" + id, options).then(
-			utils.handleHttpErrors
-		);
+		const result = fetch(URL + "/" + id, options).then(utils.handleHttpErrors);
 		return result;
 	}
 
@@ -35,9 +33,7 @@ const reservationFacade = (function() {
 
 	function deleteReservations(id) {
 		const options = utils.fetchOptions("DELETE", false);
-		const result = fetch(configuration.URL + id, options).then(
-			utils.handleHttpErrors
-		);
+		const result = fetch(URL + id, options).then(utils.handleHttpErrors);
 		return result;
 	}
 

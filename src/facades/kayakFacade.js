@@ -4,18 +4,20 @@ import utils from "../utils";
 const URL = configuration.URL + "/api/kayak";
 
 const kayakFacade = (function() {
-	function createKayak(user, pass) {
+	function createKayak(color, description, model, name, personCount, year) {
 		const options = utils.fetchOptions("POST", false, {
-			userName: user,
-			userPass: pass
+			color: color,
+			description: description,
+			model: model,
+			name: name,
+			personCount: personCount,
+			year: year
 		});
 		return fetch(URL, options).then(() => utils.handleHttpErrors);
 	}
 	function readKayak(id) {
 		const options = utils.fetchOptions("GET", true);
-		const result = fetch(configuration.URL + "/" + id, options).then(
-			utils.handleHttpErrors
-		);
+		const result = fetch(URL + "/" + id, options).then(utils.handleHttpErrors);
 		return result;
 	}
 
@@ -30,14 +32,12 @@ const kayakFacade = (function() {
 			userName: username,
 			userPass: password
 		});
-		return fetch(configuration.URL, options).then(utils.handleHttpErrors);
+		return fetch(URL, options).then(utils.handleHttpErrors);
 	}
 
 	function deleteKayak(id) {
 		const options = utils.fetchOptions("DELETE", false);
-		const result = fetch(configuration.URL + id, options).then(
-			utils.handleHttpErrors
-		);
+		const result = fetch(URL + "/"+ id, options).then(utils.handleHttpErrors);
 		return result;
 	}
 
